@@ -22,8 +22,12 @@ readTime: 10 分钟阅读
 文章内容...
 ```
 
-3. 运行 `npm run build:articles` 或直接 `npm run dev`（会自动构建）
-4. 文章会自动出现在博客中
+3. **添加图片**（如需要）：
+   - 将图片放入 `public/images/articles/` 目录
+   - 在 Markdown 中引用：`![图片描述](/images/articles/your-image.png)`
+   
+4. 运行 `npm run build:articles` 或直接 `npm run dev`（会自动构建）
+5. 文章会自动出现在博客中
 
 ## 技术栈
 

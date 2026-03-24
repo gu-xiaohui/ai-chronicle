@@ -22,6 +22,8 @@ async function buildArticles() {
   // 读取所有 markdown 文件
   const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'))
   
+  console.log(`\n📝 Processing ${files.length} articles...\n`)
+  
   for (const file of files) {
     const filePath = path.join(contentDir, file)
     const content = fs.readFileSync(filePath, 'utf-8')
@@ -29,11 +31,16 @@ async function buildArticles() {
     // 解析 frontmatter
     const { data, content: markdown } = matter(content)
     
-    // 转换 markdown 为 HTML
-    const html = await marked(markdown)
-    
     // 生成 slug
     const slug = file.replace('.md', '')
+    
+    console.log(`Processing: ${slug}`)
+    
+    // 直接使用原始 markdown（包含图片链接）
+    // 图片保持原始 URL，不下载
+    
+    // 转换 markdown 为 HTML
+    const html = await marked(markdown)
     
     articles.push({
       slug,
@@ -61,7 +68,7 @@ export default articles
 `
   
   fs.writeFileSync(path.join(outputDir, 'articles.ts'), output)
-  console.log(`✅ Built ${articles.length} articles`)
+  console.log(`\n✅ Built ${articles.length} articles\n`)
 }
 
 function generateExcerpt(markdown) {
@@ -76,7 +83,7 @@ function generateExcerpt(markdown) {
         paragraphs.push(currentPara.trim())
       }
       currentPara = ''
-    } else if (!line.startsWith('#') && !line.startsWith('---')) {
+    } else if (!line.startsWith('#') && !line.startsWith('---') && !line.startsWith('![')) {
       currentPara += ' ' + line
     }
   }

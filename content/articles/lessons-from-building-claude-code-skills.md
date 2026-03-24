@@ -7,6 +7,8 @@ originalUrl: https://x.com/trq212/status/2033949937936085378
 readTime: 15 分钟阅读
 ---
 
+![Skills 概览](https://pbs.twimg.com/media/GoFq0HtXcAAf-5n?format=jpg&name=large)
+
 Skills 已成为 Claude Code 中使用最广泛的扩展点之一。它们灵活、易于制作，且分发简单。
 
 但这种灵活性也让人们难以知道什么才是最佳实践。什么类型的 Skills 值得制作？写好 Skill 的秘诀是什么？什么时候应该与他人分享？
