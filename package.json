@@ -4,9 +4,12 @@
   "description": "A curated collection of AI articles and essays",
   "type": "module",
   "scripts": {
+    "prebuild": "node scripts/build-articles.js",
+    "predev": "node scripts/build-articles.js",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:articles": "node scripts/build-articles.js"
   },
   "dependencies": {
     "react": "^19.0.0",
