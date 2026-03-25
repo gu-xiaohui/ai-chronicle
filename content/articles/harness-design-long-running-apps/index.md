@@ -58,6 +58,8 @@ readTime: 20 分钟阅读
 
 在一个值得注意的例子中，我提示模型为荷兰艺术博物馆创建一个网站。到第九次迭代时，它产生了一个干净、深色主题的虚构博物馆着陆页。该页面视觉精致，但很大程度上符合我的期望。然后，在第十个周期，它完全放弃了这种方法，将网站重新构想为空间体验：一个用 CSS 透视渲染的 3D 房间，艺术品以自由形式的位置挂在墙上，以及基于门口的画廊房间之间的导航，而不是滚动或点击。这是我从单次生成中从未见过的创造性飞跃。
 
+![荷兰艺术博物馆 3D 空间体验](/images/articles/harness-design-long-running-apps/hero.png)
+
 ## 扩展到全栈编码
 
 有了这些发现，我将这种 GAN 启发的模式应用于全栈开发。生成器-评估器循环自然地映射到软件开发生命周期，其中代码审查和 QA 扮演与设计评估器相同的结构角色。
@@ -99,13 +101,26 @@ Harness 贵了 20 多倍，但输出质量的差异立即可见。
 
 然而，当我点击时，问题开始出现。布局浪费空间，固定高度的面板让大部分视口空着。工作流程僵化。尝试填充关卡提示我先创建精灵和实体，但 UI 中没有任何东西引导我朝那个顺序。更重要的是，实际游戏是坏的。我的实体出现在屏幕上，但没有任何东西响应输入。深入研究代码揭示了实体定义和游戏运行时之间的连接被破坏，表面上没有指示哪里出了问题。
 
-评估单 agent 运行后，我将注意力转向 harness 运行。这次运行从相同的单句提示开始，但规划器步骤将该提示扩展为分布在十个冲刺中的 16 功能规格。它远远超出了单 agent 运行尝试的范围。除了核心编辑器和播放模式外，规格还要求精灵动画系统、行为模板、音效和音乐、AI 辅助精灵生成器和关卡设计器，以及带有可共享链接的游戏导出。我给了规划器访问我们的[前端设计 skill](https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md) 的权限，它阅读并使用它作为规格的一部分为应用程序创建视觉设计语言。对于每个冲刺，生成器和评估器协商一个合同，定义冲刺的具体实现细节，以及将要测试以验证完成的可测试行为。
+评估单 agent 运行后，我将注意力转向 harness 运行。
+
+![Solo harness - 初始界面](/images/articles/harness-design-long-running-apps/solo-1.png)
+![Solo harness - 精灵编辑器](/images/articles/harness-design-long-running-apps/solo-2.png)
+![Solo harness - 游戏界面](/images/articles/harness-design-long-running-apps/solo-3.png)
+
+这次运行从相同的单句提示开始，但规划器步骤将该提示扩展为分布在十个冲刺中的 16 功能规格。它远远超出了单 agent 运行尝试的范围。除了核心编辑器和播放模式外，规格还要求精灵动画系统、行为模板、音效和音乐、AI 辅助精灵生成器和关卡设计器，以及带有可共享链接的游戏导出。我给了规划器访问我们的[前端设计 skill](https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md) 的权限，它阅读并使用它作为规格的一部分为应用程序创建视觉设计语言。对于每个冲刺，生成器和评估器协商一个合同，定义冲刺的具体实现细节，以及将要测试以验证完成的可测试行为。
 
 应用程序立即显示出比单 agent 运行更多的润色和流畅性。画布使用整个视口，面板大小合理，界面具有一致的身份，跟踪规格中的设计方向。我在单 agent 运行中看到的一些笨拙确实仍然存在——工作流程仍然没有清楚地表明你应该在尝试填充关卡之前构建精灵和实体，我必须通过摸索来弄清楚这一点。这被理解为基本模型产品直觉的差距，而不是 harness 设计要解决的问题，尽管它确实表明 harness 内的定向迭代可以进一步帮助提高输出质量的地方。
 
 通过编辑器工作时，新运行相对于单 agent 的优势变得更加明显。精灵编辑器更丰富、更完整，具有更干净的工具调色板、更好的颜色选择器和更可用的缩放控件。
 
-因为我要求规划器将 AI 功能编织到其规格中，所以应用程序还带有内置的 Claude 集成，让我可以通过提示生成游戏的不同部分。这显著加快了工作流程。
+因为我要求规划器将 AI 功能编织到其规格中，所以应用程序还带有内置的 Claude 集成，让我可以通过提示生成游戏的不同部分。
+
+![Full harness - 初始界面](/images/articles/harness-design-long-running-apps/harness-1.png)
+![Full harness - 精灵编辑器](/images/articles/harness-design-long-running-apps/harness-2.png)
+![Full harness - AI 游戏设计](/images/articles/harness-design-long-running-apps/harness-3.png)
+![Full harness - 游戏界面](/images/articles/harness-design-long-running-apps/harness-4.png)
+
+这显著加快了工作流程。
 
 最大的区别在于播放模式。我实际上能够移动我的实体并玩游戏。物理有一些粗糙的边缘——我的角色跳上平台但最终与它重叠，这在直觉上感觉不对——但核心的东西工作了，这是单 agent 运行没有做到的。在四处移动后，我确实遇到了 AI 游戏关卡构建的一些限制。有一堵大墙我无法跳过，所以我被卡住了。这表明有一些常识性改进和边缘情况，harness 可以处理以进一步完善应用程序。
 
@@ -175,7 +190,11 @@ Harness 贵了 20 多倍，但输出质量的差异立即可见。
 
 生成器仍然容易在独自工作时遗漏细节或存根功能，QA 仍然在捕获那些最后一英里问题以让生成器修复方面增加价值。
 
-基于提示，我期待一个可以创建旋律、和声和鼓模式，将它们排列成歌曲，并沿途从集成的 agent 获得帮助的程序。下面的视频显示了结果。
+基于提示，我期待一个可以创建旋律、和声和鼓模式，将它们排列成歌曲，并沿途从集成的 agent 获得帮助的程序。
+
+![DAW 应用界面](/images/articles/harness-design-long-running-apps/daw-1.png)
+
+下面的视频显示了结果。
 
 该应用程序远非专业的音乐制作程序，agent 的歌曲作曲技能显然需要大量工作。此外，Claude 实际上无法听到，这使得 QA 反馈循环在音乐品味方面不太有效。
 
