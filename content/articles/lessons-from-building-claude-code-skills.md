@@ -7,7 +7,7 @@ originalUrl: https://x.com/trq212/status/2033949937936085378
 readTime: 15 分钟阅读
 ---
 
-![Skills 概览](https://pbs.twimg.com/media/GoFq0HtXcAAf-5n?format=jpg&name=large)
+![Skills 概览](/images/articles/skills-cover.jpg)
 
 Skills 已成为 Claude Code 中使用最广泛的扩展点之一。它们灵活、易于制作，且分发简单。
 
@@ -26,6 +26,8 @@ Skills 已成为 Claude Code 中使用最广泛的扩展点之一。它们灵活
 我们发现 Claude Code 中一些最有趣的 Skills 创造性地使用了这些配置选项和文件夹结构。
 
 ## Skills 的 9 种类型
+
+![Skills 的 9 种类型](/images/articles/skills-types.jpg)
 
 在整理了所有的 Skills 后，我们注意到它们可以归类为几种常见的类型。最好的 Skills 能清晰地归入某一类；而令人困惑的 Skills 往往跨越多个类别。
 
@@ -114,23 +116,33 @@ Skills 已成为 Claude Code 中使用最广泛的扩展点之一。它们灵活
 
 ## 制作 Skills 的技巧
 
+![制作 Skills 的技巧](/images/articles/skills-tips.jpg)
+
 ### 不要说显而易见的事
 
 Claude Code 对你的代码库了解很多。如果你发布一个主要是关于知识的 Skill，试着专注于那些能推动 Claude 跳出常规思维方式的信息。
 
 ### 建立 Gotchas 部分
 
+![建立 Gotchas 部分](/images/articles/skills-gotchas.jpg)
+
 任何 Skill 中信号最高的内容是 Gotchas 部分。这些部分应该从常见失败点积累而来。
 
 ### 使用文件系统和渐进式披露
+
+![使用文件系统和渐进式披露](/images/articles/skills-filesystem.jpg)
 
 Skill 是一个文件夹，不仅仅是一个 markdown 文件。你应该将整个文件系统视为一种上下文工程和渐进式披露的形式。
 
 ### 避免过度限制 Claude
 
+![避免过度限制 Claude](/images/articles/skills-railroading.jpg)
+
 Claude 通常会尝试遵循你的指令。给 Claude 它需要的信息，但给它适应情况的灵活性。
 
 ### Description 字段是给模型看的
+
+![Description 字段是给模型看的](/images/articles/skills-description.jpg)
 
 当 Claude Code 启动会话时，它会构建每个可用 Skill 及其描述的列表。description 字段不是摘要 — 它是描述何时触发此 Skill 的说明。
 
