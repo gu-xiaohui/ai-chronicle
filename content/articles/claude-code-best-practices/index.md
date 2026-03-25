@@ -7,9 +7,13 @@ originalUrl: https://x.com/PandaTalk8/status/2035975664730575325
 readTime: 20 分钟阅读
 ---
 
+![封面](/images/articles/claude-code-best-practices/image-1.png)
+
 我用 Claude Code 大半年了，踩过的坑比写过的代码还多。
 
 一开始我以为 Claude Code 就是一个"更高级的 Copilot"——在终端里打字，它帮我写代码，完事。后来才发现，这东西的上限远比我想象得高，但前提是你得知道怎么用。
+
+这篇文章结合官方文档和实战经验，整理了我认为最重要的使用技巧。有些是血泪教训，有些是读文档才知道的隐藏功能。
 
 ## 一、CLAUDE.MD：最被低估的功能
 
@@ -18,6 +22,8 @@ readTime: 20 分钟阅读
 **写好你的 CLAUDE.md。**
 
 CLAUDE.md 是 Claude Code 在每次对话开始时自动读取的指令文件。它就像你给一个新同事写的 onboarding doc——你希望他知道什么，你就写什么。
+
+很多人不写 CLAUDE.md，或者随便写两行。结果就是每次对话都要从头解释项目结构、编码规范、技术栈选择。这就像每天早上都要重新给同事介绍一遍公司。
 
 ### 一个好的 CLAUDE.md 应该包含什么
 
@@ -28,19 +34,22 @@ CLAUDE.md 是 Claude Code 在每次对话开始时自动读取的指令文件。
 - 安装依赖：npm install
 - 运行测试：npm test
 - 单个测试：npm test -- --grep "test name"
+- 格式化：npm run format
 
 ## 编码规范
-- Python 使用 ruff 格式化
-- 测试用 pytest
-- 提交信息用英文
+- Python 使用 ruff 格式化，行宽 88
+- 测试用 pytest，每个 service 对应一个测试文件
+- API 路由文件名用复数：users.py, orders.py
+- 提交信息用英文，格式：type(scope): description
 
 ## 架构决策
-- 选 Tailwind 是因为团队统一了这个规范
-- 用户权限校验在 middleware 里做
+- 选 Tailwind 而不是 CSS Modules，因为团队统一了这个规范
+- 用户权限校验在 middleware 里做，不要在每个路由重复写
+- Redis 缓存的 key 前缀统一用 `app:v1:`
 
 ## 常见陷阱
-- 数据库连接池上限是 20
-- 不要 mock 数据库
+- 数据库连接池上限是 20，别在循环里开新连接
+- 不要 mock 数据库，上次 mock 测试通过但生产迁移失败了
 ```
 
 ### 关键原则
@@ -48,6 +57,10 @@ CLAUDE.md 是 Claude Code 在每次对话开始时自动读取的指令文件。
 1. **写 Claude 从代码里读不出来的东西** — 项目的"为什么"比"是什么"更重要
 2. **控制在 200 行以内** — 太长会导致 Claude 忽略规则
 3. **不要放频繁变化的内容** — 详细 API 文档不适合放在这里
+
+### CLAUDE.md 的四级层级
+
+![CLAUDE.md 层级](/images/articles/claude-code-best-practices/image-2.png)
 
 ## 二、提示词的质量决定产出的质量
 
@@ -105,13 +118,27 @@ CLAUDE.md 是 Claude Code 在每次对话开始时自动读取的指令文件。
 4. **用子 Agent 隔离噪声**
 5. **在 CLAUDE.md 里写压缩保留指令**
 
+![Memory vs CLAUDE.md](/images/articles/claude-code-best-practices/image-3.png)
+
 ## 六、权限管理
+
+![权限模式](/images/articles/claude-code-best-practices/image-4.png)
 
 ### 几个 Git 铁律
 
 1. **永远不要让 Claude Code 自动 push**
 2. **频繁 commit** — 保留回退能力
 3. **警惕破坏性操作** — rm -rf、git reset --hard 等
+
+## 七、HOOKS：让规则变成铁律
+
+CLAUDE.md 里的指令是"建议"，Hooks 是"铁律"。
+
+![Hooks 事件类型](/images/articles/claude-code-best-practices/image-5.png)
+
+## 八、快捷键速查
+
+![快捷键](/images/articles/claude-code-best-practices/image-6.png)
 
 ## 总结
 
