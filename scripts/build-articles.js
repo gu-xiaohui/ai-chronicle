@@ -19,31 +19,41 @@ marked.setOptions({
 async function buildArticles() {
   const articles = []
   
-  // 读取所有 markdown 文件
-  const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'))
+  // 读取所有文章文件夹
+  const articleDirs = fs.readdirSync(contentDir, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
   
-  console.log(`\n📝 Processing ${files.length} articles...\n`)
+  console.log(`\n📝 Processing ${articleDirs.length} articles...\n`)
   
-  for (const file of files) {
-    const filePath = path.join(contentDir, file)
-    const content = fs.readFileSync(filePath, 'utf-8')
+  for (const dir of articleDirs) {
+    const articlePath = path.join(contentDir, dir)
+    const mdFile = path.join(articlePath, 'index.md')
+    
+    // 检查是否有 index.md
+    if (!fs.existsSync(mdFile)) {
+      console.log(`Skipping ${dir}: no index.md found`)
+      continue
+    }
+    
+    const content = fs.readFileSync(mdFile, 'utf-8')
     
     // 解析 frontmatter
     const { data, content: markdown } = matter(content)
     
-    // 生成 slug
-    const slug = file.replace('.md', '')
+    console.log(`Processing: ${dir}`)
     
-    console.log(`Processing: ${slug}`)
-    
-    // 直接使用原始 markdown（包含图片链接）
-    // 图片保持原始 URL，不下载
+    // 处理图片路径 - 将相对路径转换为绝对路径
+    const processedMarkdown = markdown.replace(
+      /!\[([^\]]*)\]\(\.\/images\/([^)]+)\)/g,
+      '![$1](/images/articles/' + dir + '/$2)'
+    )
     
     // 转换 markdown 为 HTML
-    const html = await marked(markdown)
+    const html = await marked(processedMarkdown)
     
     articles.push({
-      slug,
+      slug: dir,
       title: data.title,
       author: data.author,
       date: data.date,
