@@ -67,6 +67,28 @@ const articles = [
     "readTime": "5 分钟阅读",
     "excerpt": "我们在 Anthropic 使用 Claude Code 的方式与外界最大的不同之一，是我们在 **Slack** 中大量使用它。 具体来说，我们用它来**回答问题、处理反馈和构建原型**。",
     "content": "<p><img src=\"/images/articles/how-we-use-claude-code-in-slack/image-1.jpg\" alt=\"封面\"></p>\n<p>我们在 Anthropic 使用 Claude Code 的方式与外界最大的不同之一，是我们在 <strong>Slack</strong> 中大量使用它。</p>\n<p>具体来说，我们用它来<strong>回答问题、处理反馈和构建原型</strong>。</p>\n<h2>回答问题</h2>\n<p>当市场、客户支持、营销、产品等部门的人有关于 Claude Code 的问题时，他们会直接在 Slack 中问 Claude。虽然我们保持文档更新，但它们不能涵盖所有可能的问题。<strong>最终的真相来源在代码库中</strong>。</p>\n<p>因为它有访问 git 的权限，它可以回答像&quot;这个功能是什么时候发布的？&quot;或&quot;谁负责这段代码？&quot;这样的问题，这可以帮助你找到正确的负责人。</p>\n<blockquote>\n<p><strong>Pro tip</strong>：更进一步，添加可以访问事件存储或分析仪表板的 skills，来回答关于功能使用或错误日志的问题。</p>\n</blockquote>\n<h2>处理反馈</h2>\n<p>我们有非常活跃的 Claude Code 反馈渠道。当有人发送反馈时，我们经常会 tag @Claude 来尝试用一些引导上下文来解决它。这并不总是可能的，但 PR 可以是一种探索或理解如何做某事的方式。</p>\n<p>每个 Slack 中的 Claude 实例都在 web 上的 Claude Code 中可见，所以我在 claude.ai/code 的聊天历史几乎就像我的 Jira 板，反馈 PR 就在那里等着被处理。</p>\n<h2>构建原型</h2>\n<p>我真的不再发送备忘录或制作模型了，我直接制作 CC 原型。如果我有一个想法，我可能会通过 Slack 中的 Claude 启动原型，等看看结果如何，然后再决定是否值得投入。</p>\n<h2>使用 Slack 中 Claude 的技巧</h2>\n<ol>\n<li><p><strong>投资配置（如 CLAUDE.MD、hooks、验证等）更有价值</strong>，因为它让非技术人员也能更好地在 Slack 中使用 Claude。</p>\n</li>\n<li><p><strong>你仍然需要检查、测试和阅读代码</strong>。我们不会直接从 Slack 合并到 main 分支。</p>\n</li>\n<li><p><strong>为频道设置&quot;默认仓库&quot;</strong>，让 Slack 中的 Claude 更容易知道它可以在哪里进行更改。</p>\n</li>\n</ol>\n<hr>\n<p><strong>文档链接</strong>: <a href=\"https://code.claude.com/docs/en/slack\">https://code.claude.com/docs/en/slack</a></p>\n<p>如果你已经在使用它，请给我们反馈！</p>\n"
+  },
+  {
+    "slug": "2025-llm-year-in-review",
+    "title": "2025年LLM年度回顾",
+    "author": "Andrej Karpathy",
+    "date": "2025-12-20T00:00:00.000Z",
+    "category": "AI 技术",
+    "originalUrl": "https://x.com/karpathy/status/2002118205729562949",
+    "readTime": "15 分钟阅读",
+    "excerpt": "2025年是LLM之年。在这篇文章中，我将分享我对2025年LLM领域最重要发展的看法。 我们看到了从简单聊天界面到复杂应用架构的转变。成功的LLM应用通常包含：",
+    "content": "<p><img src=\"/images/articles/2025-llm-year-in-review/image-1.jpg\" alt=\"封面\"></p>\n<p>2025年是LLM之年。在这篇文章中，我将分享我对2025年LLM领域最重要发展的看法。</p>\n<h2>1. LLM应用架构的兴起</h2>\n<p><img src=\"/images/articles/2025-llm-year-in-review/image-2.jpg\" alt=\"LLM应用架构\"></p>\n<p>我们看到了从简单聊天界面到复杂应用架构的转变。成功的LLM应用通常包含：</p>\n<ul>\n<li><strong>Agent系统</strong> - 编排多个LLM调用，形成复杂的有向无环图(DAG)</li>\n<li><strong>GUI界面</strong> - 为人类在环提供特定应用的用户界面</li>\n<li><strong>自主性滑块</strong> - 允许用户控制AI的自主程度</li>\n</ul>\n<p>关于&quot;应用层&quot;有多厚的讨论很多。LLM实验室会捕获所有应用吗？还是LLM应用有发展空间？我个人认为LLM实验室会趋向于培养通才型大学生，但LLM应用会将他们组织、微调并部署为特定领域的专业人士。</p>\n<h2>2. Claude Code：生活在你的电脑上的AI</h2>\n<p>Claude Code (CC) 成为第一个令人信服的LLM Agent示范 - 它以循环的方式将工具使用和推理串联起来进行扩展的问题解决。</p>\n<p>CC的显著特点是它在你的电脑上运行，使用你的私有环境、数据和上下文。我认为OpenAI在这方面犯了错误，他们将codex/agent的工作集中在云端部署，而不是<code>localhost</code>。</p>\n<p>CC把这个优先级搞对了，并将其打包成一个美丽、极简、引人注目的CLI形式，改变了AI的样子 - 它不再只是你访问的一个网站，而是一个&quot;生活&quot;在你电脑上的小精灵。</p>\n<h2>3. Vibe Coding</h2>\n<p>2025年是AI跨越能力门槛的一年，可以仅通过英语构建各种令人印象深刻的程序。</p>\n<p>我创造了&quot;vibe coding&quot;这个术语，完全没有想到它会如此流行。有了vibe coding，编程不再严格保留给受过高度训练的专业人士，而是任何人都可以做的事情。</p>\n<h2>4. LLM GUI</h2>\n<p>文本是计算机（和LLM）偏好的数据表示，但它不是人们偏好的格式，特别是在输入端。人们实际上不喜欢阅读文本 - 它既慢又费力。</p>\n<p>相反，人们喜欢以视觉和空间的方式消费信息，这就是传统计算中发明GUI的原因。同样，LLM应该以我们偏好的格式与我们交流 - 图像、信息图、幻灯片、白板、动画/视频、Web应用等。</p>\n<h2>TLDR</h2>\n<p>2025年是LLM令人兴奋和略微惊讶的一年。LLM正在成为一种新型智能，同时比我预期的更聪明，也比我预期的更笨。无论如何，它们非常有用，我认为行业甚至还没有意识到目前能力的10%潜力。</p>\n<p>同时，有这么多想法可以尝试，概念上这个领域感觉是开放的。正如我今年早些时候在Dwarkesh播客上提到的，我同时（表面上矛盾地）相信我们将看到快速持续的进展，而且还有很多工作要做。系好安全带。</p>\n<hr>\n<p><strong>原文链接</strong>: <a href=\"https://karpathy.bearblog.dev/year-in-review-2025/\">https://karpathy.bearblog.dev/year-in-review-2025/</a></p>\n"
+  },
+  {
+    "slug": "llms-flip-the-script",
+    "title": "权力归于人民：LLM如何颠覆技术传播",
+    "author": "Andrej Karpathy",
+    "date": "2025-04-08T00:00:00.000Z",
+    "category": "AI 技术",
+    "originalUrl": "https://x.com/karpathy/status/1909308143156240538",
+    "readTime": "10 分钟阅读",
+    "excerpt": "变革性技术通常遵循自上而下的传播路径：起源于政府或军事环境，通过企业，最终到达个人——想想电力、密码学、计算机、飞行、互联网或GPS。 但LLM 显示出对这种模式的**戏剧性逆转**——它们为普通人产生不成比例的利益，而它们在企业 and 政府中的影响则更加温和和滞后。",
+    "content": "<p><img src=\"/images/articles/llms-flip-the-script/image-1.jpg\" alt=\"封面\"></p>\n<p>变革性技术通常遵循自上而下的传播路径：起源于政府或军事环境，通过企业，最终到达个人——想想电力、密码学、计算机、飞行、互联网或GPS。</p>\n<p>但LLM 显示出对这种模式的<strong>戏剧性逆转</strong>——它们为普通人产生不成比例的利益，而它们在企业 and 政府中的影响则更加温和和滞后。</p>\n<h2>为什么个人受益更多？</h2>\n<p>ChatGPT 是历史上增长最快的消费者应用，每周有4亿活跃用户。这不是对以前存在的东西的小升级，而是对个人在广泛能力范围内的力量水平的<strong>主要乘数</strong>。</p>\n<p>使用障碍非常低——模型便宜（甚至免费）、快速、任何有URL（甚至本地机器）的人都可以使用，它们说任何人的母语。据我所知，普通人从未经历过如此戏剧性、如此快速的技术解锁。</p>\n<h2>为什么企业和政府受益较少？</h2>\n<h3>1. 能力特征不匹配</h3>\n<p>LLM提供非常特定的能力特征——仅仅是准专家知识/性能，但同时跨越非常广泛的领域。换句话说，它们同时多才多艺但也浅薄和易犯错。</p>\n<p>而组织的独特超能力是通过雇佣工程师、研究人员、分析师、律师、营销人员等将多样化的专业知识集中到一个实体中。虽然LLM可以使这些专家个人更高效，但对组织的改进只是变得稍微更好地做它已经能做的事情。</p>\n<h3>2. 复杂性挑战</h3>\n<p><img src=\"/images/articles/llms-flip-the-script/image-2.png\" alt=\"组织复杂性\"></p>\n<p>组织处理更复杂的问题和必要的协调，包括：各种集成、遗留系统、企业品牌或风格指南、严格的安全协议、隐私考虑、国际化、监管合规和法律风险。</p>\n<p>你不能只是vibe code一些东西。你可能离失去工作只差一个灾难性的幻觉。</p>\n<h3>3. 组织惯性</h3>\n<p>大型组织有充分的文档记录的惯性，包括文化、历史先例、在快速变化时期升级的政治地盘、沟通开销、分布式劳动力的再培训挑战和旧式官僚主义。</p>\n<h2>展望未来</h2>\n<p>今天，前沿级LLM性能非常容易获得且便宜。超过这一点，你无法花费边际美元来获得更好的性能、可靠性或自主性。<strong>钱买不到更好的ChatGPT。比尔·盖茨和你一样与GPT-4o交谈。</strong></p>\n<p>但这能持续多久？训练时扩展（增加参数、数据）、测试时扩展（增加时间）和模型集成（增加批次）是增加动态范围的力量。另一方面，模型蒸馏一直是减少动态范围的力量。</p>\n<h2>结语</h2>\n<p>我们发现自己处于技术史上一个独特而前所未有的情况。如果你回顾各种科幻作品，你会发现很少有人会预测AI革命会呈现这种进程。</p>\n<p>它本应是一个由将军掌握的绝密政府超级大脑项目，而不是ChatGPT基本上在一夜之间免费出现在每个人口袋里的设备上。</p>\n<p>记住William Gibson的那句话吗？&quot;未来已经在这里，只是分布不均&quot;？</p>\n<p>惊喜——未来已经在这里，而且<strong>令人震惊地分布均匀</strong>。权力归于人民。</p>\n<p>我个人很喜欢这一点。</p>\n"
   }
 ]
 
