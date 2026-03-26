@@ -1,5 +1,12 @@
 import articles from '../data/articles'
 
+// 格式化日期为 YYYY-MM-DD
+function formatDate(dateStr: string): string {
+  if (!dateStr) return ''
+  const match = dateStr.match(/^(\d{4}-\d{2}-\d{2})/)
+  return match ? match[1] : dateStr
+}
+
 export default function Home() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -32,7 +39,7 @@ export default function Home() {
                     {article.category}
                   </span>
                   <span className="text-xs text-[var(--color-muted)]">
-                    {article.date}
+                    {formatDate(article.date)}
                   </span>
                 </div>
                 <h3 className="font-serif text-lg font-semibold mb-2 line-clamp-2 hover:text-[var(--color-accent)] transition-colors">

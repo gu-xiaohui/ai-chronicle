@@ -1,6 +1,13 @@
 import { useParams } from 'react-router-dom'
 import articles from '../data/articles'
 
+// 格式化日期为 YYYY-MM-DD
+function formatDate(dateStr: string): string {
+  if (!dateStr) return ''
+  const match = dateStr.match(/^(\d{4}-\d{2}-\d{2})/)
+  return match ? match[1] : dateStr
+}
+
 export default function Article() {
   const { slug } = useParams()
   const article = articles.find(a => a.slug === slug)
@@ -46,7 +53,7 @@ export default function Article() {
             <span className="font-medium text-[var(--color-text)]">{article.author}</span>
           </div>
           <span>·</span>
-          <span>{article.date}</span>
+          <span>{formatDate(article.date)}</span>
           <span>·</span>
           <a 
             href={article.originalUrl} 
