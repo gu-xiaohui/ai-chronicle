@@ -3,6 +3,17 @@
 
 const articles = [
   {
+    "slug": "autoresearch-optimizing-ai-skill",
+    "title": "用 Autoresearch 优化 AI Skill，它教会了我们写更好的测试",
+    "author": "Lotte (Langfuse)",
+    "date": "2026-03-28T00:00:00.000Z",
+    "category": "Claude Code",
+    "originalUrl": "https://x.com/lotte_verheyden/status/2037665098983190904",
+    "readTime": "15 分钟阅读",
+    "excerpt": "[Autoresearch](https://github.com/karpathy/autoresearch) 自 Karpathy 发布以来引起了很多关注，甚至他本人都在自己手动调优了几个月的代码上找到了 20 个改进。它专为优化代码设计，但底层原则适用更广。 看到网上的讨论后，我们想知道：它优化 [Langfuse skill](https://github.com/langfuse/ski...",
+    "content": "<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/cover.jpg\" alt=\"封面\"></p>\n<p><a href=\"https://github.com/karpathy/autoresearch\">Autoresearch</a> 自 Karpathy 发布以来引起了很多关注，甚至他本人都在自己手动调优了几个月的代码上找到了 20 个改进。它专为优化代码设计，但底层原则适用更广。</p>\n<p>看到网上的讨论后，我们想知道：它优化 <a href=\"https://github.com/langfuse/skills/tree/main/skills/langfuse\">Langfuse skill</a> 的效果如何？</p>\n<h2>Autoresearch 是什么</h2>\n<p>Autoresearch 是一个极简的 ~630 行 Python 脚本，自动化了实验循环。外层&quot;优化器&quot; Agent 读取目标文件，生成改进假设并做出修改。内层循环运行修改后的文件，评估器对结果打分。如果分数提高，保留修改；如果没提高，丢弃修改。无限重复，你终止时停止。</p>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/autoresearch-loop.png\" alt=\"循环\"></p>\n<h2>测试用例</h2>\n<p>我们定义了评估 Langfuse skill 的 6 个测试用例，涵盖不同的 Langfuse 场景和查询模式。</p>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/test-score.png\" alt=\"测试\"></p>\n<h2>实验结果：14 轮优化</h2>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/before-after.png\" alt=\"前后对比\"></p>\n<p>运行 14 轮实验后，Autoresearch 生成了一个显著改进的 skill 版本。</p>\n<h2>关键改进</h2>\n<h3>1. 用 curl 替换 pip 安装</h3>\n<p>原始 skill 在生成代码时通过 pip 安装 langfuse。Autoresearch 改为直接使用 curl。</p>\n<p><strong>为什么更好？</strong> pip 需要用户交互（确认提示），需要先安装 Python，需要虚拟环境管理。curl 是预装的，非交互的，不依赖 Python 包管理。</p>\n<h3>2. 用 fetch API 替换 Python SDK</h3>\n<p>原始 skill 使用 langfuse Python SDK。Autoresearch 改为直接调用 REST API。</p>\n<p><strong>为什么更好？</strong> SDK 需要额外的 pip install 步骤，会在沙盒测试环境中失败。在真实用户仓库中 langfuse 可能已安装了 SDK，但 SDK 更新可能破坏代码。直接调用 REST API 更轻量、更可靠。</p>\n<h3>3. 移除 sub-prompt 追踪</h3>\n<p>原始 skill 有完整的小节来识别跨 prompt 的共享文本（sub-prompt linking）。Autoresearch 完全移除了。</p>\n<p><strong>为什么更好？</strong> 6 个测试用例中没有一个覆盖此功能。如果不可衡量就会被裁掉。从产品角度看，这些功能用户实际需要——但 skill 现在无法帮助处理常见的迁移后步骤。</p>\n<h3>4. 将&quot;目标函数&quot;作为 harness 的一切</h3>\n<p>Autoresearch 会精确优化你衡量和给上下文执行的内容。如果目标函数有盲点，它会找到并利用。这是一个好的教训：<strong>花足够时间让 Agent harness 代表真实世界。</strong></p>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/changes-1.png\" alt=\"变更1\"></p>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/changes-2.png\" alt=\"变更2\"></p>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/changes-3.png\" alt=\"变更3\"></p>\n<h2>收获</h2>\n<p><img src=\"/images/articles/autoresearch-optimizing-ai-skill/takeaways.png\" alt=\"收获\"></p>\n<ol>\n<li><p><strong>Autoresearch 优化你衡量什么。</strong> 如果评估数据集太窄或目标函数太简单，它会对实际使用场景过拟合。</p>\n</li>\n<li><p><strong>有些&quot;错误&quot;实际上是正确的权衡。</strong> 原始 skill 中某些看似低效的代码（如 pip install）提供了更好的开发者体验。Autoresearch 移除了它们是因为测试无法捕捉这种价值。</p>\n</li>\n<li><p><strong>花时间让 harness 代表真实世界。</strong> Agent 驱动的优化只能和你的评估函数一样好。如果 harness 有盲点，优化器会找到并利用它们。</p>\n</li>\n</ol>\n<h2>我们会再用吗？</h2>\n<p>会。尽管有上述注意事项，Autoresearch 无疑比手动优化更快。只是要确保你的评估套件真正代表了实际使用场景。</p>\n<blockquote>\n<p>就像初级工程师的 PR 审查：有些变更会很有洞察力，有些则是走捷径。你的工作是把它们分开。</p>\n</blockquote>\n"
+  },
+  {
     "slug": "agent-friendly-cli-seven-principles",
     "title": "Agent 友好 CLI 的七个原则",
     "author": "Trevin Chow",
